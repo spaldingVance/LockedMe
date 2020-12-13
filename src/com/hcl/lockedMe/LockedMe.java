@@ -19,8 +19,16 @@ public class LockedMe implements Locker {
 
 	@Override
 	public void deleteFile(String fileToDelete) {
-		// TODO Auto-generated method stub
+		File file = new File("./src/resources/" + fileToDelete);
 		
+		if(file.exists()) {
+			boolean fileDeleted = file.delete();
+			if(fileDeleted) {
+				System.out.println("File deleted");
+			} 
+		} else {
+			System.out.println("The file was not found!");
+		}
 	}
 
 	@Override
@@ -37,7 +45,7 @@ public class LockedMe implements Locker {
 		
 		String[] fileNames = file.list();
 		
-//		System.out.println(fileNames.toString());
+		
 		
 		for (String fileName : fileNames) {
 			System.out.println(fileName);

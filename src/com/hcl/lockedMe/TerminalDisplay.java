@@ -39,6 +39,8 @@ public class TerminalDisplay {
 					System.out.println("To delete a file, please enter the name: ");
 					String fileToDelete = sc.nextLine();
 					
+					locker.deleteFile(fileToDelete);
+					
 					break;
 				case 3:
 					System.out.println("To search for a file, please enter the name: ");
