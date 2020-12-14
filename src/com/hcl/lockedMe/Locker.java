@@ -13,5 +13,9 @@ public interface Locker {
 	public void searchForFile(String fileToSearchFor);
 
 	public void listFiles();
+	
+	public void listFilesAndDirectories();
+	
+	public void listFileStructure();
 
 }

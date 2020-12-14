@@ -2,6 +2,8 @@ package com.hcl.lockedMe;
 
 import java.util.Scanner;
 
+import com.hcl.lockedMe.exceptions.FileMismatchException;
+
 public class TerminalDisplay {
 
 	public static void main(String[] args) {
@@ -10,7 +12,7 @@ public class TerminalDisplay {
 
 	public static void displayProgram() {
 
-		char goAgain = 'y';
+		boolean goAgain = true;
 
 		Scanner sc = new Scanner(System.in);
 
@@ -25,46 +27,87 @@ public class TerminalDisplay {
 			System.out.println("3. Delete a File");
 			System.out.println("4. Search for a File");
 			System.out.println("5. List all Files");
+			System.out.println("6. List all Directories and Files");
+			System.out.println("7. List File and Directory Structure");
+			System.out.println("8. Exit the Program \n");
+		
 
 			int choice = sc.nextInt();
 			sc.nextLine();
 
+			char firstLetter = 'n';
+
 			switch (choice) {
+
 			case 1:
-				System.out.println("To add a file, please enter the name: ");
-				String fileToAdd = sc.nextLine();
-				locker.addFile(fileToAdd);
-
+				while (firstLetter != '!') {
+					System.out.println("To add a file, please enter the name, or enter '!' to exit: ");
+					String fileToAdd = sc.nextLine();
+					firstLetter = fileToAdd.charAt(0);
+					if (firstLetter == '!') {
+						break;
+					}
+					locker.addFile(fileToAdd);
+					
+				}
 				break;
+		
 			case 2:
-				System.out.println("To add a directory, please enter the name: ");
-				String directoryToAdd = sc.nextLine();
-				locker.addDirectory(directoryToAdd);
+				while (firstLetter != '!') {
+					System.out.println("To add a directory, please enter the name, or enter '!' to exit: ");
+					String directoryToAdd = sc.nextLine();
+					firstLetter = directoryToAdd.charAt(0);
+					if (firstLetter == '!') {
+						break;
+					}
+					locker.addDirectory(directoryToAdd);
+				}
+				
 			case 3:
-				System.out.println("To delete a file, please enter the name: ");
-				String fileToDelete = sc.nextLine();
-
-				locker.deleteFile(fileToDelete);
-
+				while (firstLetter != '!') {
+					System.out.println("To delete a file, please enter the name, or enter '!' to exit: ");
+					String fileToDelete = sc.nextLine();
+					firstLetter = fileToDelete.charAt(0);
+					if (firstLetter == '!') {
+						break;
+					}
+					try {
+						locker.deleteFile(fileToDelete);
+					} catch (FileMismatchException e) {
+						e.printStackTrace();
+					}
+				}
 				break;
+				
 			case 4:
-				System.out.println("To search for a file, please enter the name: ");
-				String fileToSearchFor = sc.nextLine();
-				locker.searchForFile(fileToSearchFor);
+				while (firstLetter != '!') {
+					System.out.println("To search for a file, please enter the name, or enter '!' to exit: ");
+					String fileToSearchFor = sc.nextLine();
+					firstLetter = fileToSearchFor.charAt(0);
+					if (firstLetter == '!') {
+						break;
+					}
+					locker.searchForFile(fileToSearchFor);
+				}
 				break;
 			case 5:
 				locker.listFiles();
 				break;
+			case 6:
+				locker.listFilesAndDirectories();
+				break;
+			case 7:
+				locker.listFileStructure();
+				break;
+			case 8:
+				goAgain = false;
+				break;
+				
 			default:
 				System.out.println("Option not found, please try again!");
-
 			}
 
-			System.out.println("Would you like to perform another operation? (y/n)");
-
-			goAgain = sc.nextLine().toLowerCase().charAt(0);
-
-		} while (goAgain == 'y');
+		} while (goAgain);
 
 		sc.close();
 
