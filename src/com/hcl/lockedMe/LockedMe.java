@@ -2,10 +2,16 @@ package com.hcl.lockedMe;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class LockedMe implements Locker {
 	
 	static String basePath = "./src/resources";
+	
+	static ArrayList<String> fileNames = new ArrayList<String>();
+	
+	
 
 
 
@@ -28,66 +34,34 @@ public class LockedMe implements Locker {
 		if (file.exists()) {
 			boolean fileDeleted = file.delete();
 			if (fileDeleted) {
-				System.out.println("File deleted");
+				System.out.println("File deleted \n");
 			}
 		} else {
-			System.out.println("The file was not found!");
+			System.out.println("The file was not found! \n");
 		}
 	}
 
 	@Override
 	public void searchForFile(String fileToSearchFor) {
 		
-		_iterateThroughDirectory(fileToSearchFor, "./src/resources", false, true);
+		FileSearch.iterateThroughDirectory(fileToSearchFor, "./src/resources", false, true, false);
 
 	}
 
-//	public static String getBasePath() {
-//		return basePath;
-//	}
-//
-//	public static void setBasePath(String basePath) {
-//		LockedMe.basePath = basePath;
-//	}
 
-	private void _iterateThroughDirectory(String fileToSearchFor, String path, boolean shouldPrint, boolean shouldSearch) {
-		
-		File f = new File(path);
-		File directoryFiles[] = f.listFiles();
-
-		for (File currentFile : directoryFiles) {
-			
-			if (currentFile.isFile()) {
-				if(shouldPrint) {
-					System.out.println(currentFile.getName());
-				}
-				
-				if (shouldSearch && currentFile.getName().equals(fileToSearchFor)) {
-					System.out.println("Match found!");
-					return;
-				}
-			} else if (currentFile.isDirectory()) {
-				if(shouldPrint) {
-					System.out.println(currentFile + "/");
-				}
-				
-				String pathName = currentFile.getAbsolutePath();
-				_iterateThroughDirectory(fileToSearchFor, pathName, shouldPrint, shouldSearch);
-				
-
-			} else {
-				if(shouldPrint) {
-					System.out.println("unknown item");
-				}
-				
-			}
-		}
-	}
+	
 
 	@Override
 	public void listFiles() {
 
-		_iterateThroughDirectory("", basePath, true, false);
+		FileSearch.iterateThroughDirectory("", basePath, false, false, false);
+		System.out.println("\n All Files in Ascending Order: \n");
+		for(String fileName : fileNames) {
+			
+			System.out.println(fileName);
+		}
+		
+		System.out.println();
 
 	}
 
