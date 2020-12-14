@@ -19,9 +19,10 @@ public class TerminalDisplay {
 		do {
 			System.out.println("Please enter a choice to get started! \n");
 			System.out.println("1. Add a File");
-			System.out.println("2. Delete a File");
-			System.out.println("3. Search for a File");
-			System.out.println("4. List all Files");
+			System.out.println("2. Add a Directory");
+			System.out.println("3. Delete a File");
+			System.out.println("4. Search for a File");
+			System.out.println("5. List all Files");
 			
 			Scanner sc = new Scanner(System.in);
 			
@@ -36,18 +37,22 @@ public class TerminalDisplay {
 					
 					break;
 				case 2:
+					System.out.println("To add a directory, please enter the name: ");
+					String directoryToAdd = sc.nextLine();
+					locker.addDirectory(directoryToAdd);
+				case 3:
 					System.out.println("To delete a file, please enter the name: ");
 					String fileToDelete = sc.nextLine();
 					
 					locker.deleteFile(fileToDelete);
 					
 					break;
-				case 3:
+				case 4:
 					System.out.println("To search for a file, please enter the name: ");
 					String fileToSearchFor = sc.nextLine();
 					locker.searchForFile(fileToSearchFor);
 					break;
-				case 4:
+				case 5:
 					locker.listFiles();
 					break;
 				default:
