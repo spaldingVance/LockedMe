@@ -8,7 +8,7 @@ public class FileSearch {
 
 	static TreeSet<String> fileNames = new TreeSet<String>();
 
-	public static boolean iterateThroughDirectory(String fileToSearchFor, String path, boolean shouldPrint,
+	public static boolean iterateThroughDirectory(String fileToSearchFor, String path,
 			boolean shouldSearch, boolean shouldDelete) {
 
 		File f = new File(path);
@@ -17,9 +17,6 @@ public class FileSearch {
 		for (File currentFile : directoryFiles) {
 
 			if (currentFile.isFile()) {
-				if (shouldPrint) {
-					System.out.println(currentFile.getName());
-				}
 
 				fileNames.add(currentFile.getName());
 
@@ -34,12 +31,9 @@ public class FileSearch {
 				}
 
 			} else if (currentFile.isDirectory()) {
-				if (shouldPrint) {
-					System.out.println(currentFile + "/");
-				}
 
 				String pathName = currentFile.getAbsolutePath();
-				iterateThroughDirectory(fileToSearchFor, pathName, shouldPrint, shouldSearch, shouldDelete);
+				iterateThroughDirectory(fileToSearchFor, pathName, shouldSearch, shouldDelete);
 
 			}
 		}

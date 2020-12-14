@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class LockedMe implements Locker {
 	
-	static String basePath = "./src/resources";
+	public String basePath = "./src/resources";
 	
 	
 	
@@ -32,14 +32,14 @@ public class LockedMe implements Locker {
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
-			System.out.println("Error");
+			System.out.println("Error " + e);
 		}
 
 	}
 
 	@Override
 	public void deleteFile(String fileToDelete) {
-		if (FileSearch.iterateThroughDirectory(fileToDelete, "./src/resources", false, true, true)) {
+		if (FileSearch.iterateThroughDirectory(fileToDelete, "./src/resources", true, true)) {
 			System.out.println("File deleted");
 		} else {
 			System.out.println("File not found!");
@@ -50,8 +50,12 @@ public class LockedMe implements Locker {
 	@Override
 	public void searchForFile(String fileToSearchFor) {
 		
-		FileSearch.iterateThroughDirectory(fileToSearchFor, "./src/resources", false, true, false);
-
+		boolean fileExists = FileSearch.iterateThroughDirectory(fileToSearchFor, "./src/resources", true, false);
+		if(fileExists) {
+			System.out.println("File found!");
+		} else {
+			System.out.println("File not found!");
+		}
 	}
 
 
@@ -60,7 +64,11 @@ public class LockedMe implements Locker {
 	@Override
 	public void listFiles() {
 
-		FileSearch.iterateThroughDirectory("", basePath, true, false, false);
+		FileSearch.iterateThroughDirectory("", basePath, false, false);
+		
+		for (String fileName : FileSearch.getFileNames()) {
+			System.out.println(fileName);
+		}
 
 	}
 
