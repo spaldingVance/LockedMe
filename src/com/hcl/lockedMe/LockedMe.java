@@ -3,6 +3,8 @@ package com.hcl.lockedMe;
 import java.io.File;
 import java.io.IOException;
 
+import com.hcl.lockedMe.exceptions.FileMismatchException;
+
 public class LockedMe implements Locker {
 
 	public String basePath = "./src/resources";
@@ -35,11 +37,11 @@ public class LockedMe implements Locker {
 	}
 
 	@Override
-	public void deleteFile(String fileToDelete) {
+	public void deleteFile(String fileToDelete) throws FileMismatchException {
 		if (FileSearch.iterateThroughDirectory(fileToDelete, "./src/resources", true, true)) {
 			System.out.println("File deleted");
 		} else {
-			System.out.println("File not found!");
+			throw new FileMismatchException("Uh oh! File not found!");
 		}
 
 	}
