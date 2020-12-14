@@ -44,7 +44,8 @@ public class TerminalDisplay {
 					break;
 				case 3:
 					System.out.println("To search for a file, please enter the name: ");
-					String fileToSearch = sc.nextLine();
+					String fileToSearchFor = sc.nextLine();
+					locker.searchForFile(fileToSearchFor);
 					break;
 				case 4:
 					locker.listFiles();
