@@ -8,8 +8,8 @@ public class FileSearch {
 
 	static TreeSet<String> fileNames = new TreeSet<String>();
 
-	public static boolean iterateThroughDirectory(String fileToSearchFor, String path, 
-			boolean shouldSearch, boolean shouldDelete) {
+	public static boolean iterateThroughDirectory(String fileToSearchFor, String path, boolean shouldSearch,
+			boolean shouldDelete) {
 
 		File f = new File(path);
 		File directoryFiles[] = f.listFiles();

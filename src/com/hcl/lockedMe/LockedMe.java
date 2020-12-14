@@ -3,7 +3,6 @@ package com.hcl.lockedMe;
 import java.io.File;
 import java.io.IOException;
 
-
 public class LockedMe implements Locker {
 
 	public String basePath = "./src/resources";
@@ -19,13 +18,12 @@ public class LockedMe implements Locker {
 		}
 	}
 
-
 	public void addFile(String fileToAdd) {
 		File file = new File("./src/resources/" + fileToAdd);
 
 		try {
-			
-			if(file.createNewFile()) {
+
+			if (file.createNewFile()) {
 				System.out.println("File Created");
 			} else {
 				System.out.println("Unable to create File");
