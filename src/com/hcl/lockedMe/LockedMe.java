@@ -9,7 +9,6 @@ public class LockedMe implements Locker {
 	
 	static String basePath = "./src/resources";
 	
-	static ArrayList<String> fileNames = new ArrayList<String>();
 	
 	
 
@@ -26,19 +25,26 @@ public class LockedMe implements Locker {
 		}
 
 	}
+	
+	public void addDirectory(String fileToAdd) {
+		File file = new File("./src/resources/" + fileToAdd);
+
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			System.out.println("Error");
+		}
+
+	}
 
 	@Override
 	public void deleteFile(String fileToDelete) {
-		File file = new File("./src/resources/" + fileToDelete);
-
-		if (file.exists()) {
-			boolean fileDeleted = file.delete();
-			if (fileDeleted) {
-				System.out.println("File deleted \n");
-			}
+		if (FileSearch.iterateThroughDirectory(fileToDelete, "./src/resources", false, true, true)) {
+			System.out.println("File deleted");
 		} else {
-			System.out.println("The file was not found! \n");
+			System.out.println("File not found!");
 		}
+		
 	}
 
 	@Override
@@ -54,14 +60,7 @@ public class LockedMe implements Locker {
 	@Override
 	public void listFiles() {
 
-		FileSearch.iterateThroughDirectory("", basePath, false, false, false);
-		System.out.println("\n All Files in Ascending Order: \n");
-		for(String fileName : fileNames) {
-			
-			System.out.println(fileName);
-		}
-		
-		System.out.println();
+		FileSearch.iterateThroughDirectory("", basePath, true, false, false);
 
 	}
 

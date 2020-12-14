@@ -2,14 +2,13 @@ package com.hcl.lockedMe;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class FileSearch {
-	
-	static ArrayList<String> fileNames;
-	
-	
-	
-	public static void iterateThroughDirectory(String fileToSearchFor, String path, boolean shouldPrint,
+
+	static TreeSet<String> fileNames = new TreeSet<String>();
+
+	public static boolean iterateThroughDirectory(String fileToSearchFor, String path, boolean shouldPrint,
 			boolean shouldSearch, boolean shouldDelete) {
 
 		File f = new File(path);
@@ -25,9 +24,15 @@ public class FileSearch {
 				fileNames.add(currentFile.getName());
 
 				if (shouldSearch && currentFile.getName().equals(fileToSearchFor)) {
-					System.out.println("Match found!");
-					return;
+					if (shouldDelete) {
+						return currentFile.delete();
+
+					} else {
+						return true;
+					}
+
 				}
+
 			} else if (currentFile.isDirectory()) {
 				if (shouldPrint) {
 					System.out.println(currentFile + "/");
@@ -36,20 +41,13 @@ public class FileSearch {
 				String pathName = currentFile.getAbsolutePath();
 				iterateThroughDirectory(fileToSearchFor, pathName, shouldPrint, shouldSearch, shouldDelete);
 
-			} else {
-				if (shouldPrint) {
-					System.out.println("unknown item");
-				}
-
 			}
 		}
+		return true;
 
 	}
 
-
-
-	public static ArrayList<String> getFileNames() {
+	public static TreeSet<String> getFileNames() {
 		return fileNames;
 	}
 }
-
